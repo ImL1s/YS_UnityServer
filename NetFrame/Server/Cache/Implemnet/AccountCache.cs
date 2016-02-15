@@ -53,7 +53,7 @@ namespace Server.Cache
 
         public bool MatchPassword(string account, string password)
         {
-            return AccountModel.QueryFullAccount(account, password) > 0 ? true : false;
+            return AccountModel.QueryFullAccountMatch(account, password) > 0 ? true : false;
         }
 
         public void Offline(UserToken token)

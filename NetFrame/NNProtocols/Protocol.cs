@@ -5,7 +5,7 @@
         /// <summary>
         /// 登陸模塊
         /// </summary>
-        public const byte TYPE_LOGIN = 0; 
+        public const byte TYPE_LOGIN = 0;
 
         public enum Type : byte
         {

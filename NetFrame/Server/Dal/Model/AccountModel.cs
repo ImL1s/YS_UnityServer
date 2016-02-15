@@ -155,7 +155,7 @@ namespace Server.Dal.Model
         /// </summary>
         /// <param name="account"></param>
         /// <returns>查詢帳號到的個數</returns>
-        public static int QueryFullAccount(string account,string password)
+        public static int QueryFullAccountMatch(string account,string password)
         {
             string cmdStr = "select * from Account where account = @account and password = @password;";
             SqlParameter para1 = new SqlParameter("@account", System.Data.SqlDbType.VarChar) { Value = account };

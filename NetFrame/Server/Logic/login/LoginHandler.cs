@@ -53,14 +53,8 @@ namespace Server.Logic.login
                     Login(token, message.GetMessage<AccountInfoDTO>());
                     break;
 
-                case (int)Protocol.Command.LoginResponse:
-                    break;
-
                 case (int)Protocol.Command.RegisterRequest:
                     Register(token, message.GetMessage<AccountInfoDTO>());
-                    break;
-
-                case (int)Protocol.Command.RegisterResponse:
                     break;
 
                 default:
