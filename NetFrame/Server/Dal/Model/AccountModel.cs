@@ -18,7 +18,7 @@ namespace Server.Dal.Model
     /// <summary>
     /// 帳號Model
     /// </summary>
-    public class AccountModel
+    public class AccountModel :IModel
     {
 
         #region field 字段
@@ -111,7 +111,7 @@ namespace Server.Dal.Model
         /// 藉由傳入的帳號名稱生成此Model實例
         /// </summary>
         /// <param name="account"></param>
-        public static AccountModel QueryData(string account,string password)
+        public static AccountModel CreateByAccount(string account,string password)
         {
             string cmdStr = "select * from Account where account = @account and password = @password;";
             SqlParameter para1 = new SqlParameter("@account", System.Data.SqlDbType.VarChar) { Value = account };
@@ -155,13 +155,13 @@ namespace Server.Dal.Model
         /// </summary>
         /// <param name="account"></param>
         /// <returns>查詢帳號到的個數</returns>
-        public static int QueryFullAccount(string account,string password)
+        public static int QueryFullAccountMatch(string account,string password)
         {
             string cmdStr = "select * from Account where account = @account and password = @password;";
             SqlParameter para1 = new SqlParameter("@account", System.Data.SqlDbType.VarChar) { Value = account };
             SqlParameter para2 = new SqlParameter("@password", System.Data.SqlDbType.VarChar) { Value = password };
 
-            int count = NSQLHelper.ExecuteNonQuery(cmdStr, para1);
+            int count = NSQLHelper.ExecuteNonQuery(cmdStr, para1, para2);
             return count;
         }
 
@@ -177,15 +177,17 @@ namespace Server.Dal.Model
             QueryData(account);
         }
 
-        public void AddToDatabase()
+        public bool AddToDatabase()
         {
             if (AddToDatabase(this.account, this.password))
             {
                 this.Id = GetPrimaryKey(this.account);
+                return true;
             }
             else
             {
                 OutPutManager.WriteConsole("加入帳號失敗!資料庫中受引響的行數為0");
+                return false;
             }
         }
 

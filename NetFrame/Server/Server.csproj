@@ -45,11 +45,20 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bll\IAccountBll.cs" />
+    <Compile Include="Bll\IBll.cs" />
     <Compile Include="Bll\Implement\AccountBll.cs" />
     <Compile Include="Bll\BllFactory.cs" />
+    <Compile Include="Bll\Implement\PlayerRoleBll.cs" />
     <Compile Include="Cache\CacheFactory.cs" />
-    <Compile Include="Cache\IAccountCache.cs" />
+    <Compile Include="Cache\Interface\IAccountCache.cs" />
+    <Compile Include="Cache\Interface\ICache.cs" />
     <Compile Include="Cache\Implemnet\AccountCache.cs" />
+    <Compile Include="Cache\Implemnet\PlayerRoleCache.cs" />
+    <Compile Include="Dal\IModel.cs" />
+    <Compile Include="Dal\Model\PlayerRoleModel.cs" />
+    <Compile Include="Dal\Model\RoleProfessionModel.cs" />
+    <Compile Include="Define.cs" />
+    <Compile Include="Logic\SelectRole\SelectRoleHandler.cs" />
     <Compile Include="Log\CommandManager.cs" />
     <Compile Include="Dal\Model\AccountModel.cs" />
     <Compile Include="HandlerCenter.cs" />
@@ -62,7 +71,9 @@
     <Compile Include="Tool\ExecutorPool.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NetFrame\NetFrame.csproj">

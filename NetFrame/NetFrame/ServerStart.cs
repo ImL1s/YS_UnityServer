@@ -1,4 +1,15 @@
-﻿using NetFrame.ABS;
+﻿/*
+ * Author:ImL1s
+ *
+ * Date:2016/02/08
+ *
+ * Email:ImL1s@outlook.com
+ *
+ * description:
+ *
+ */
+
+using NetFrame.ABS;
 using NetFrame.DataEncoding;
 using NetFrame.EventDelegate;
 using NetFrame.Tool;
@@ -158,13 +169,12 @@ namespace NetFrame
         // 開始一個token接收他服務的客戶端的數據
         private void StartReceive(UserToken token)
         {
-
-            token.Connecting.ReceiveAsync(token.ReceiveSAEA);
+            bool isAsync = token.Connecting.ReceiveAsync(token.ReceiveSAEA);
             //// 如果是同步(當下處理完畢)，手動調用
-            //if (!token.Connecting.ReceiveAsync(token.ReceiveSAEA))
-            //{
-            //    ProcessReceive(token.ReceiveSAEA);
-            //}
+            if (!isAsync)
+            {
+                ProcessReceive(token.ReceiveSAEA);
+            }
         }
 
         // 處理接收完畢的數據
@@ -189,16 +199,16 @@ namespace NetFrame
                 // 客戶端沒有傳送資料、或是socket出錯了
                 else
                 {
-                    // 網路出錯
+                    // 
                     if (token.ReceiveSAEA.SocketError != SocketError.Success)
                     {
                         ClientClose(token, receiveSAEA.SocketError.ToString());
                     }
-                    // 主動斷開
+                    // 發送0個byte
                     else
                     {
                         ClientClose(token, "客戶端(" + ((IPEndPoint)(token.Connecting.RemoteEndPoint)).Address + ")發送了0個byte,判斷為斷線");
-                        ClientClose(token, "客戶端(" + token.TokenID + ")斷線");
+                        //ClientClose(token, "客戶端(" + token.TokenID + ")斷線");
                     } 
                 }
             }
@@ -234,7 +244,8 @@ namespace NetFrame
         // 處理客戶端斷線、離線
         private void ClientClose(UserToken token, string error)
         {
-            OutPutManager.WriteConsole(error);
+            handlerCenter.ClientClose(token, error);
+            OutPutManager.WriteConsole("玩家下線 Info:" + error);
             semaphore.Release();
             tokenPool.push(token);
         }

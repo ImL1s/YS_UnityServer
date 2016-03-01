@@ -5,14 +5,18 @@
         /// <summary>
         /// 登陸模塊
         /// </summary>
-        public const byte TYPE_LOGIN = 0; 
+        public const byte TYPE_LOGIN = 0;
 
         public enum Type : byte
         {
             /// <summary>
-            /// 登入與註冊
+            /// 登入與註冊.
             /// </summary>
-            Login = 0
+            Login = 0,
+            /// <summary>
+            /// 選擇角色.
+            /// </summary>
+            SelectRole = 1
         }
 
         public enum Area : int
@@ -39,7 +43,15 @@
             /// <summary>
             /// 註冊回應
             /// </summary>
-            RegisterResponse = 3
+            RegisterResponse = 3,
+            /// <summary>
+            /// 選擇角色請求
+            /// </summary>
+            SelectRoleRequest = 4,
+            /// <summary>
+            /// 選擇角色回應
+            /// </summary>
+            SelectRoleResponse = 5
         }
     }
 }

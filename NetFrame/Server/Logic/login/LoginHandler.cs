@@ -22,15 +22,15 @@ namespace Server.Logic.login
     {
         IAccountBll accountBll = BllFactory.accountBll;
 
-        public override int Area
+        public override Protocol.Area Area
         {
             get
             {
-                return (int)Protocols.Protocol.Area.None;
+                return Protocols.Protocol.Area.None;
             }
         }
 
-        public override byte Type
+        public override Protocol.Type Type
         {
             get
             {
@@ -53,14 +53,8 @@ namespace Server.Logic.login
                     Login(token, message.GetMessage<AccountInfoDTO>());
                     break;
 
-                case (int)Protocol.Command.LoginResponse:
-                    break;
-
                 case (int)Protocol.Command.RegisterRequest:
                     Register(token, message.GetMessage<AccountInfoDTO>());
-                    break;
-
-                case (int)Protocol.Command.RegisterResponse:
                     break;
 
                 default:
@@ -85,8 +79,9 @@ namespace Server.Logic.login
 
             ExecutorPool.Instance.Execute(() =>
             {
+                OutPutManager.WriteConsole("處理登入!");
                 LoginResult result = accountBll.Login(token, accountInfo.Account, accountInfo.Password);
-                WriteClient(token, (int)Protocol.Command.LoginResponse, result);
+                WriteClient(token, Protocol.Command.LoginResponse, result);
             });
         }
 
@@ -105,7 +100,7 @@ namespace Server.Logic.login
             ExecutorPool.Instance.Execute(() =>
             {
                 CreateResult result = accountBll.Create(token, accountInfo.Account, accountInfo.Password);
-                WriteClient(token, (int)Protocol.Command.RegisterResponse, result);
+                WriteClient(token, Protocol.Command.RegisterResponse, result);
             });
         }
     }

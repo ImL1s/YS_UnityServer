@@ -14,6 +14,7 @@ using NetFrame;
 using Server.Cache;
 using Protocols.Dto;
 using NetFrame.Tool;
+using System.Text;
 
 namespace Server.Bll
 {
@@ -21,6 +22,10 @@ namespace Server.Bll
     {
         protected IAccountCache accountCache = CacheFactory.accountCache;
 
+        /// <summary>
+        /// 玩家下線.
+        /// </summary>
+        /// <param name="token"></param>
         public void Close(UserToken token)
         {
             throw new NotImplementedException();
@@ -49,10 +54,23 @@ namespace Server.Bll
 
         public LoginResult Login(UserToken token, string account, string password)
         {
-            if (accountCache.Match(account, password)) { return LoginResult.Succed; }
-            if (accountCache.MatchAccount(account)) { return LoginResult.IncorrectAccount; }
+            try
+            {
+                string base64Pwd = Convert.ToBase64String(Encoding.UTF8.GetBytes(password));
 
-            return LoginResult.error;
+                if (accountCache.Match(account, base64Pwd))
+                {
+                    accountCache.Online(token, account);
+                    return LoginResult.Succed;
+                }
+                if (accountCache.MatchAccount(account)) { return LoginResult.IncorrectPassword; }
+                else { return LoginResult.IncorrectAccount; }
+            }
+            catch (Exception e)
+            {
+                OutPutManager.WriteConsole("登入模組發生錯誤!! Error: " + e.ToString());
+                return LoginResult.error;
+            }
         }
     }    
 }

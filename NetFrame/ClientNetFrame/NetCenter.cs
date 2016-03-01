@@ -1,4 +1,15 @@
-﻿using Protocols;
+﻿/*
+ * Author:ImL1s
+ *
+ * Date:2016/02/08
+ *
+ * Email:ImL1s@outlook.com
+ *
+ * description:
+ *
+ */
+
+using Protocols;
 using System.Collections.Generic;
 using System.Net.Sockets;
 using System;
