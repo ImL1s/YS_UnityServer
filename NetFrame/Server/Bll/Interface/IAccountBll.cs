@@ -39,6 +39,6 @@ namespace Server.Bll
         /// <param name="token"></param>
         void Close(UserToken token);
 
-        int Get(UserToken token);
+        int GetAccountID(UserToken token);
     }
 }

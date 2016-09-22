@@ -7,6 +7,8 @@
  *
  */
 
+using NetFrame;
+
 namespace Server.Cache
 {
     /// <summary>
@@ -14,6 +16,11 @@ namespace Server.Cache
     /// </summary>
     public interface ICache
     {
-
+        /// <summary>
+        /// 客戶端下線.
+        /// </summary>
+        /// <param name="token"></param>
+        /// <param name="error"></param>
+        void ClientClose(UserToken token, string error);
     }
 }

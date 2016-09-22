@@ -22,6 +22,7 @@ namespace Server.Cache
     {
         private Dictionary<UserToken, string> onlineAccMap = new Dictionary<UserToken, string>();
 
+        // 帳號與帳號模型緩存.
         private Dictionary<string, AccountModel> accountMap = new Dictionary<string, AccountModel>();
 
         /// <summary>
@@ -36,9 +37,18 @@ namespace Server.Cache
             accountMap.Add(account, AccountModel.CreateByAccount(account, password));
         }
 
-        public int GetId(UserToken token)
+        /// <summary>
+        /// 使用連接對象得到Account的主鍵ID.
+        /// </summary>
+        /// <param name="token"></param>
+        /// <returns></returns>
+        public int GetAccountId(UserToken token)
         {
-            throw new NotImplementedException();
+            if (!onlineAccMap.ContainsKey(token)) return -1;
+
+            string account = onlineAccMap[token];
+            InitAccountCache(account);
+            return accountMap[account].Id;
         }
 
         /// <summary>
@@ -110,7 +120,23 @@ namespace Server.Cache
         /// <param name="account"></param>
         public void Online(UserToken token, string account)
         {
-            onlineAccMap.Add(token, account);
+            if (!onlineAccMap.ContainsKey(token)) onlineAccMap.Add(token, account);
+        }
+
+        public void ClientClose(UserToken token, string error)
+        {
+            if (onlineAccMap.ContainsKey(token)) onlineAccMap.Remove(token);
+        }
+
+        /// <summary>
+        /// 初始化緩存的資料.
+        /// </summary>
+        /// <param name="account"></param>
+        private void InitAccountCache(string account)
+        {
+            if (accountMap.ContainsKey(account)) return;
+            AccountModel accountModel = AccountModel.CreateByAccount(account);
+            accountMap.Add(accountModel.Account, accountModel);
         }
     }
 }

@@ -20,11 +20,14 @@ namespace Server
 {
     class HandlerCenter : AbsHandlerCenter
     {
-        protected IHandler loginHandler = new Logic.login.LoginHandler(); 
+        protected IHandler loginHandler = new Logic.login.LoginHandler();
+        protected IHandler selectRoleHandler = new Logic.SelectRole.SelectRoleHandler();
+
 
         public override void ClientClose(UserToken token, string error)
         {
-            
+            selectRoleHandler.ClientClose(token, error);
+            loginHandler.ClientClose(token, error);
         }
 
         public override void ClientConnect(UserToken token)
@@ -37,11 +40,17 @@ namespace Server
             //SocketModel model = message as SocketModel;
             SocketModel model = (SocketModel)message;
             OutPutManager.WriteConsole("HandlerCenter 收到消息!!");
+
             switch (model.Type)
             {
                 case (byte)Protocol.Type.Login:
 
                     loginHandler.MessageReceive(token, model);
+                    break;
+
+                case (byte)Protocol.Type.SelectRole:
+
+                    selectRoleHandler.MessageReceive(token, model);
                     break;
             }
         }

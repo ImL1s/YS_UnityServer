@@ -5,7 +5,7 @@
  *
  * Email:ImL1s@outlook.com
  *
- * description:
+ * description:帳號Bll層.
  *
  */
 
@@ -47,9 +47,14 @@ namespace Server.Bll
             }
         }
 
-        public int Get(UserToken token)
+        /// <summary>
+        /// 使用連接對象得到Account的主鍵ID.
+        /// </summary>
+        /// <param name="token"></param>
+        /// <returns></returns>
+        public int GetAccountID(UserToken token)
         {
-            throw new NotImplementedException();
+            return accountCache.GetAccountId(token);
         }
 
         public LoginResult Login(UserToken token, string account, string password)

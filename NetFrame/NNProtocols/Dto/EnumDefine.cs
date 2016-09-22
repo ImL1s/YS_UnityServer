@@ -45,6 +45,30 @@ namespace Protocols.Dto
         Succed = 127
     }
 
+    /// <summary>
+    /// 選擇角色結果.
+    /// </summary>
+    public enum SelectRoleResult
+    {
+        /// <summary>
+        /// 成功.
+        /// </summary>
+        Succed,
+        /// <summary>
+        /// 錯誤.
+        /// </summary>
+        Error,
+        /// <summary>
+        /// 帳號尚未上線，不能進行新增角色動作
+        /// </summary>
+        AccountNotOnline,
+        /// <summary>
+        /// 創建角色失敗.
+        /// </summary>
+        CreateFailed,
+        AlreadyExist
+    }
+
     #endregion
 
     #region other

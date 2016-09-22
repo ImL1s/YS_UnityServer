@@ -51,7 +51,12 @@ namespace Server.Cache
         /// <returns></returns>
         bool IsOnline(string account);
 
-        int GetId(UserToken token);
+        /// <summary>
+        /// 使用連接對象得到Account的主鍵ID.
+        /// </summary>
+        /// <param name="token"></param>
+        /// <returns></returns>
+        int GetAccountId(UserToken token);
 
         /// <summary>
         /// 玩家上線.

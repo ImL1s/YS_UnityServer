@@ -108,7 +108,7 @@ namespace Server.Dal.Model
         }
 
         /// <summary>
-        /// 藉由傳入的帳號名稱生成此Model實例
+        /// 藉由傳入的帳號名稱與密碼生成此Model實例
         /// </summary>
         /// <param name="account"></param>
         public static AccountModel CreateByAccount(string account,string password)
@@ -135,6 +135,37 @@ namespace Server.Dal.Model
 
             return null;
         }
+
+        /// <summary>
+        /// 藉由傳入的帳號名稱生成此Model實例
+        /// </summary>
+        /// <param name="account"></param>
+        /// <param name="password"></param>
+        /// <returns></returns>
+        public static AccountModel CreateByAccount(string account)
+        {
+            string cmdStr = "select * from Account where account = @account;";
+            SqlParameter para1 = new SqlParameter("@account", System.Data.SqlDbType.VarChar) { Value = account };
+
+            using (SqlDataReader reader = NSQLHelper.ExecuteReader(cmdStr, para1))
+            {
+                if (reader.HasRows)
+                {
+                    if (reader.Read())
+                    {
+                        AccountModel model = new AccountModel();
+                        model.id = reader.GetInt32(0);
+                        model.account = reader.GetString(1);
+                        model.password = reader.GetString(2);
+
+                        return model;
+                    }
+                }
+            }
+
+            return null;
+        }
+
 
         /// <summary>
         /// 查詢帳號.

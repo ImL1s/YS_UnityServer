@@ -65,7 +65,7 @@ namespace ClientNetFrame
             connecting = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             Cache = new List<byte>();
             Messages = new List<SocketModel>();
-            readBuffer = new byte[1024];
+            readBuffer = new byte[1024 * 1024 * 5];
             isReading = false;
         }
 
