@@ -21,7 +21,7 @@ namespace NetFrame
         private LengthDecode mLD;                               // 長度解碼方法
         private Encode mEncode;                                 // 資料編碼方法
         private Decode mDecode;                                 // 資料解碼方法
-        private TokenOffline mTokenOffline;                     // Token下線事件
+        //private TokenOfflineHandler mTokenOffline;              // Token下線事件
 
         private bool isReading = false;                         // 是否正在讀取數據
         private bool isWriting = false;                         // 是否正在寫入數據
@@ -162,17 +162,9 @@ namespace NetFrame
         /// <summary>
         /// 用戶離線通知
         /// </summary>
-        public TokenOffline TokenOffline
+        public TokenOfflineHandler ClientClose
         {
-            get
-            {
-                return mTokenOffline;
-            }
-
-            set
-            {
-                mTokenOffline = value;
-            }
+            get;set;
         }
 
         /// <summary>
@@ -256,7 +248,7 @@ namespace NetFrame
         {
             if(connecting == null)
             {
-                mTokenOffline(this, "目標Token已經斷線.");
+                ClientClose(this, "目標Token已經斷線.");
                 return;
             }
             sendQueue.Enqueue(value);

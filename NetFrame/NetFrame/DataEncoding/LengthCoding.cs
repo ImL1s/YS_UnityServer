@@ -41,8 +41,9 @@ namespace NetFrame.DataEncoding
             int Length = bReader.ReadInt32();
 
             // 如果頭信息長度大於資料長度，代表沒有傳送資料or資料不完整
-            if (Length > mStream.Length - mStream.Position)
+            if (Length > mStream.Length - mStream.Position || Length < 0)
             {
+                cache.Clear();
                 return null;
             }
 

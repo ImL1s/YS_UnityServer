@@ -1,4 +1,5 @@
 ﻿using NetFrame.ABS;
+using NetFrame.EventDelegate;
 using System;
 using System.Collections.Generic;
 using System.Net.Sockets;
@@ -28,7 +29,7 @@ namespace NetFrame
         /// <param name="decode">資料解碼器</param>
         /// <param name="encode">資料編碼器</param>
         public UserTokenPool(AbsHandlerCenter center,int maxCount,EventHandler<SocketAsyncEventArgs> IOCcallBack,Delegate LE,Delegate LD,
-            Delegate encode,Delegate decode)
+            Delegate encode,Delegate decode, TokenOfflineHandler clientCloseHandler)
         {
             pool = new Stack<UserToken>(maxCount);
             int idIndex = 0;

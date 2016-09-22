@@ -31,11 +31,11 @@ namespace NetFrame.EventDelegate
     public delegate object Decode(byte[] value);
 
     /// <summary>
-    /// UserToken離線事件
+    /// UserToken離線委派.
     /// </summary>
     /// <param name="token"></param>
     /// <param name="message"></param>
-    public delegate void TokenOffline(UserToken token, string message);
+    public delegate void TokenOfflineHandler(UserToken token, string message);
 
     public class EventDelegate
     {

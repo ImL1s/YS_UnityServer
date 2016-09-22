@@ -117,7 +117,7 @@ namespace NetFrame
         public void Start(int queueCount, int port,int userTokenPoolMax)
         {
             // 初始化玩家連接池
-            tokenPool = new UserTokenPool(handlerCenter,userTokenPoolMax, mIOCompletedCallback, mLE, mLD, mEncode, mDecode);
+            tokenPool = new UserTokenPool(handlerCenter,userTokenPoolMax, mIOCompletedCallback, mLE, mLD, mEncode, mDecode,this.ClientClose);
 
             listenSocket.Bind(new IPEndPoint(IPAddress.Any, port));
             listenSocket.Listen(queueCount);
